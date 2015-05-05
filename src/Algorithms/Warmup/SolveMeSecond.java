@@ -1,6 +1,10 @@
-import java.io.*;
-import java.util.*;
+package Algorithms.Warmup;
 
+import java.util.Scanner;
+
+/**
+ * https://www.hackerrank.com/challenges/solve-me-second
+ */
 class SolveMeSecond {
 
     static int solveMeSecond(int a, int b) {
