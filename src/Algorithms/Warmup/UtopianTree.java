@@ -14,7 +14,7 @@ class UtopianTree {
                 height *= 2;
             }
             if (i % 2 == 0) {
-                height +=1;
+                height += 1;
             }
         }
         return height;
@@ -26,7 +26,7 @@ class UtopianTree {
         int sum;
         int n;
         t = in.nextInt();
-        for (int i=0;i<t;i++) {
+        for (int i = 0; i < t; i++) {
             n = in.nextInt();
             sum = findHeight(n);
             System.out.println(sum);
