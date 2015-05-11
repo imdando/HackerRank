@@ -1,8 +1,5 @@
 package Algorithms.Strings;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -22,24 +19,22 @@ public class BiggerIsGreater {
             } else {
                 char[] charArray = s.toCharArray();
                 //we're only dealing with string length >= 2 here
-                int baseIndex = charArray.length - 1, currentIndex = baseIndex - 1;
-                List<Character> charRange = new ArrayList<Character>();
+                int baseIndex = charArray.length - 1;
                 while (true) {
-                    //look for the first higher order character greater than the base
-                    if (charArray[baseIndex] > charArray[currentIndex]) {
-                        //cache the sub array from current index to the end
-                        for (int j = currentIndex; j < charArray.length; j++) {
-                            if (j != baseIndex) {
-                                charRange.add(charArray[j]);
+                    //First pass, look for the longest monotonically increasing range (right to left)
+                    if (charArray[baseIndex] > charArray[baseIndex - 1]) {
+                        int currentIndex = baseIndex - 1;
+                        //Look for the first element from the end that is greater and swap with current
+                        for (int j = charArray.length - 1; j > currentIndex; j--) {
+                            if (charArray[j] > charArray[currentIndex]) {
+                                char temp = charArray[currentIndex];
+                                charArray[currentIndex] = charArray[j];
+                                charArray[j] = temp;
+                                break;
                             }
                         }
-                        charArray[currentIndex] = charArray[baseIndex];
-                        //sort the remaining characters from currentIndex to baseIndex
-                        Collections.sort(charRange);
-                        for (Character c : charRange) {
-                            currentIndex++;
-                            charArray[currentIndex] = c;
-                        }
+                        //reverse the sub-array in place from baseIndex till the end;
+                        reverse(charArray, baseIndex);
                         System.out.println(charArray);
                         break;
                     }
@@ -50,12 +45,19 @@ public class BiggerIsGreater {
                         System.out.println("no answer");
                         break;
                     }
-                    if (baseIndex == currentIndex) {
-                        currentIndex--;
-                        baseIndex = charArray.length - 1;
-                    }
                 }
             }
+        }
+    }
+
+    private static void reverse(char[] charArray, int from) {
+        int forward = from, backward = charArray.length - 1;
+        while (forward < backward) {
+            char temp = charArray[forward];
+            charArray[forward] = charArray[backward];
+            charArray[backward] = temp;
+            forward++;
+            backward--;
         }
     }
 }
